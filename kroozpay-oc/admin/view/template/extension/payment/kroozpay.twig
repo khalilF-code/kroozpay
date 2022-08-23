@@ -1,0 +1,138 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="pull-right">
+        <button type="submit" form="form-kroozpay" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <img src="https://kroozpay.com/images/logo.png" alt="" height="65" width="172"/>
+      </div>
+      <div class="panel-body">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-kroozpay" class="form-horizontal">
+
+
+      <div class="form-group required">
+            <label class="col-sm-2 control-label">{{ entry_api }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="kroozpay_api" value="{{ kroozpay_api }}" class="form-control" />
+            </div>
+          </div>
+      
+      <div class="form-group required">
+            <label class="col-sm-2 control-label">{{ entry_key }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="kroozpay_key" value="{{ kroozpay_key }}" class="form-control" />
+            </div>
+          </div>
+     
+      
+      <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_log }}</label>
+            <div class="col-sm-10">
+       <select name="kroozpay_log">
+                {% if kroozpay_log == 'Yes' %}
+                <option value="Yes" selected="selected">Yes</option>
+                {% else %}
+                <option value="Yes">Yes</option>
+                {% endif %}
+                {% if kroozpay_log == 'No' %}
+                <option value="No" selected="selected">No</option>
+                {% else %}
+                <option value="No">No</option>
+                {% endif %}
+              </select>
+            </div>
+          </div> 
+
+      <div class="form-group">
+      <label class="col-sm-2 control-label">{{ entry_complete }}</label>
+      <div class="col-sm-10">
+        <select name="kroozpay_complete" class="form-control">
+        {% for order_status in order_statuses %}
+          {% if order_status.order_status_id == kroozpay_complete %}
+          <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+          {% else %}
+          <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+          {% endif %}
+        {% endfor %}
+        </select>
+      </div>
+      </div>
+
+      <div class="form-group">
+      <label class="col-sm-2 control-label">{{ entry_canceled }}</label>
+      <div class="col-sm-10">
+        <select name="kroozpay_canceled" class="form-control">
+        {% for order_status in order_statuses %}
+          {% if order_status.order_status_id == kroozpay_canceled %}
+          <option value="{{ order_status.order_status_id }}" selected="selected">{{ order_status.name }}</option>
+          {% else %}
+          <option value="{{ order_status.order_status_id }}">{{ order_status.name }}</option>
+          {% endif %}
+        {% endfor %}
+        </select>
+      </div>
+      </div>
+
+      
+      <div class="form-group">
+            <label class="col-sm-2 control-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+        <select name="payment_kroozpay_status">
+                {% if payment_kroozpay_status %}
+                <option value="1" selected="selected">Active</option>
+                <option value="0">Desactive</option>
+                {% else %}
+                <option value="1">Active</option>
+                <option value="0" selected="selected">Desactive</option>
+                {% endif %}
+              </select>
+            </div>
+          </div>
+    
+      <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-sort-order">{{ entry_sort_order }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="kroozpay_sort_order" value="{{ kroozpay_sort_order }}" class="form-control" />
+            </div>
+          </div>
+      
+      
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-geo-zone">{{ entry_geo_zone }}</label>
+            <div class="col-sm-10">
+              <select name="kroozpay_geo_zone_id" id="input-geo-zone" class="form-control">
+                <option value="0">{{ text_all_zones }}</option>
+                {% for geo_zone in geo_zones %}
+                  {% if geo_zone.geo_zone_id == kroozpay_geo_zone_id %}
+                  <option value="{{ geo_zone.geo_zone_id }}" selected="selected">{{ geo_zone.name }}</option>
+                  {% else %}
+                  <option value="{{ geo_zone.geo_zone_id }}">{{ geo_zone.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{ footer }} 
